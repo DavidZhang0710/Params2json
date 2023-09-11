@@ -2,7 +2,7 @@
 #define PARAMS2JSON_H
 
 # include "json/json.h"
-
+# include "define.h"
 template <typename T>
 struct add_const_if_const {
     using type = T;
@@ -196,6 +196,12 @@ Json::Value toJson<const char*>(const char* const& value);
 template<>
 Json::Value toJson<bool>(const bool& value);
 
+template<>
+Json::Value toJson<simple>(const simple& obj);
+
+template<>
+Json::Value toJson<complex>(const complex& obj);
+
 template <typename T>
 Json::Value toJson(const std::vector<T>& obj) {
     Json::Value value;
@@ -207,8 +213,15 @@ Json::Value toJson(const std::vector<T>& obj) {
 
 template <typename T>
 std::string make_message(const T& t) {
-    std::string str = Json::FastWriter().write(toJson(t));
-    // std::string str = toJson(t).toStyledString();
+
+    Json::StreamWriterBuilder jswBuilder;
+    jswBuilder["emitUTF8"] = true;
+    std::unique_ptr<Json::StreamWriter>jsWriter(jswBuilder.newStreamWriter());
+
+    std::ostringstream os;
+    jsWriter->write(toJson(t), &os);
+    std::string str = os.str();
+
     if (str == "null\n") {
         return "";
     }

@@ -1,0 +1,29 @@
+cmake_minimum_required(VERSION 3.12)
+project(Params2json)
+
+# 设置C++标准
+set(CMAKE_CXX_STANDARD 11)
+
+# 下载和构建jsoncpp
+include(ExternalProject)
+ExternalProject_Add(jsoncpp
+    GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
+    GIT_TAG 1.9.4
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/jsoncpp
+    INSTALL_COMMAND ""
+)
+
+# Specify the include and library directories for jsoncpp
+ExternalProject_Get_Property(jsoncpp SOURCE_DIR)
+ExternalProject_Get_Property(jsoncpp BINARY_DIR)
+
+# Add executable and link with jsoncpp
+add_executable(Params2json
+    src/example.cpp
+    src/params2json.h
+    src/params2json.cc
+    src/define.h
+)
+
+target_include_directories(Params2json PRIVATE ${SOURCE_DIR}/include)
+target_link_libraries(Params2json ${BINARY_DIR}/lib/libjsoncpp_static.a)

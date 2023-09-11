@@ -22,4 +22,21 @@ Json::Value toJson<const char*>(const char* const& value) {
     std::string value_ensured = value ? value : "";
     return Json::Value(value_ensured);
 }
+
+template<>
+Json::Value toJson<simple>(const simple& obj) {
+    Json::Value value;
+    value["num"] = toJson(obj.num);
+    value["flag"] = toJson(obj.flag);
+    return value;
+}
+
+template<>
+Json::Value toJson<complex>(const complex& obj) {
+    Json::Value value;
+    value["num"] = toJson(obj.num);
+    value["struct_member"] = toJson(obj.struct_member);
+    return value;
+}
+
 }
