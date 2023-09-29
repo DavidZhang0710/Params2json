@@ -1,6 +1,8 @@
 # Params2json
 [![badge](https://img.shields.io/badge/license-MIT-blue)](https://github.com/DavidZhang0710/Params2json/blob/main/LICENSE)
-[![badge](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](z1516157451@gmail.com)
+
+一个基于jsoncpp开发的函数入参转json模块，方便进行函数埋点的上报，或者将入参作为二进制数据传递，支持多平台。
+
 ## 项目介绍
 基于jsoncpp构建，用于函数入参转json格式，方便进行函数埋点的上报或作为二进制数据传递，例如protobuf，并且支持多平台。
 
